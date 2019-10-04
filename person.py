@@ -22,7 +22,8 @@ class Person(object):
     def did_survive_infection(self): #method that returns True if Person's immunity is higher than virus's mortality rate
         if self.infection == None:
             return
-        random_num = random.randint(1,100)
+        random_num = random.randint(1, 100) / 100
+        print(f"Person's immunity level is {random_num} VS virus's mortality rate of {self.infection.mortality_rate}")
         if random_num < self.infection.mortality_rate:
             return False
         return True
@@ -81,25 +82,19 @@ def test_sick_person_instantiation():
     assert kid.infection.mortality_rate is 0.3
 
 def test_did_survive_infection():
-    # TODO: Create a Virus object to give a Person object an infection
     virus = Virus("Dysentery", 0.7, 0.2)
-    # TODO: Create a Person object and give them the virus infection
     person = Person(4, False, virus)
-
-    # Resolve whether the Person survives the infection or not
     survived = person.did_survive_infection()
-    # Check if the Person survived or not
     if survived:
         assert person.is_alive is True
-        # TODO: Write your own assert statements that test
-        # the values of each attribute for a Person who survived
-        # assert ...
     else:
         assert person.is_alive is False
-        # TODO: Write your own assert statements that test
-        # the values of each attribute for a Person who did not survive
-        # assert ...
-        pass
+    assert person._id == 4
+    assert person.is_vaccinated is False
+    assert person.infection is virus
+    assert person.infection.name is "Dysentery"
+    assert person.infection.repro_rate is 0.7
+    assert person.infection.mortality_rate is 0.2
 
 
 
@@ -107,3 +102,4 @@ if __name__ == "__main__":
     test_vacc_person_instantiation()
     test_not_vacc_person_instantiation()
     test_sick_person_instantiation()
+    test_did_survive_infection()
