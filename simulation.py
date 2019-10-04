@@ -4,6 +4,12 @@ from person import Person
 from logger import Logger
 from virus import Virus
 
+'''
+
+MUHAMMAD TIFAK WILL WORK ON THIS
+
+'''
+
 
 class Simulation(object):
     ''' Main class that will run the herd immunity simulation program.
