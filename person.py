@@ -14,29 +14,22 @@ class Person(object):
         should instantiate a Virus object and set it as the value
         self.infection. Otherwise, self.infection should be set to None.
         '''
-        self._id = None  # int
+        self._id = _id # int
         self.is_alive = True  # boolean
-        self.is_vaccinated = None  # boolean
+        self.is_vaccinated = is_vaccinated # boolean
         self.infection = None  # Virus object or None
 
-    def did_survive_infection(self):
-        ''' Generate a random number and compare to virus's mortality_rate.
-        If random number is smaller, person dies from the disease.
-        If Person survives, they become vaccinated and they have no infection.
-        Return a boolean value indicating whether they survived the infection.
-        '''
+    def did_survive_infection(self): #method that returns True if Person's immunity is higher than virus's mortality rate
         if self.infection == None:
             return
         random_num = random.randint(1,100)
         if random_num < self.infection.mortality_rate:
             return False
         return True
-        # Only called if infection attribute is not None.
-        # TODO:  Finish this method. Should return a Boolean
-        pass
 
 
-''' These are simple tests to ensure that you are instantiating your Person class correctly. '''
+
+############################################## PERSON TESTS ##############################################
 def test_vacc_person_instantiation():
     # create some people to test if our init method works as expected
     person = Person(1, True)
@@ -45,20 +38,30 @@ def test_vacc_person_instantiation():
     assert person.is_vaccinated is True
     assert person.infection is None
 
+    kid = Person(123, True)
+    assert kid._id == 123
+    assert kid.is_alive is True
+    assert kid.is_vaccinated is True
+    assert kid.infection is None
+
 
 def test_not_vacc_person_instantiation():
     person = Person(2, False)
-    # TODO: complete your own assert statements that test
-    # the values at each attribute
-    # assert ...
-    pass
+    assert person._id == 2
+    assert person.is_alive is True
+    assert person.is_vaccinated is False
+    assert person.infection is None
+
+    kid = Person(123, False)
+    assert kid._id == 123
+    assert kid.is_alive is True
+    assert kid.is_vaccinated is False
+    assert kid.infection is None
 
 
 def test_sick_person_instantiation():
-    # Create a Virus object to give a Person object an infection
     virus = Virus("Dysentery", 0.7, 0.2)
-    # Create a Person object and give them the virus infection
-    person = Person(3, False, virus)
+    person = Person(3, False, virus) #person with the virus
     # TODO: complete your own assert statements that test
     # the values at each attribute
     # assert ...
@@ -85,3 +88,9 @@ def test_did_survive_infection():
         # the values of each attribute for a Person who did not survive
         # assert ...
         pass
+
+
+
+if __name__ == "__main__":
+    test_vacc_person_instantiation()
+    test_not_vacc_person_instantiation()
