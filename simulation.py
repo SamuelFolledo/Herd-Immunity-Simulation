@@ -4,11 +4,6 @@ from person import Person
 from logger import Logger
 from virus import Virus
 
-'''
-
-MUHAMMAD TIFAK WILL WORK ON THIS
-
-'''
 
 
 class Simulation(object):
@@ -74,7 +69,16 @@ class Simulation(object):
 
         # Use the attributes created in the init method to create a population that has
         # the correct intial vaccination percentage and initial infected.
-        pass
+        initial_population = []
+        num_people_infected = 0
+
+        while len(initial_population) != self.pop_size:
+            if num_people_infected != initial_infected:
+                initial_population.append(Person(self.next_person_id, is_vaccinated = False, infection = self.virus))
+                infected_count +=1
+            else:
+                is_vaccinated = random.random() < self.vacc_percentage
+                initial_population.append(Person(self.next_person_id, is_vaccinated))
 
     def _simulation_should_continue(self):
         ''' The simulation should only end if the entire population is dead
