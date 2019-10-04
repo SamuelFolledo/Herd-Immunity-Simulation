@@ -1,5 +1,5 @@
-import random
-random.seed(42)
+from random import randint
+# random.seed(42)
 from virus import Virus
 
 
@@ -22,7 +22,7 @@ class Person(object):
     def did_survive_infection(self): #method that returns True if Person's immunity is higher than virus's mortality rate
         if self.infection == None:
             return
-        random_num = random.randint(1, 100) / 100
+        random_num = randint(1, 100) / 100
         print(f"Person's immunity level is {random_num} VS virus's mortality rate of {self.infection.mortality_rate}")
         if random_num < self.infection.mortality_rate:
             return False
