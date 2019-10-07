@@ -94,7 +94,7 @@ class Simulation(object):
             if person.is_alive:
                 _simulation_continue = True
                 break
-                
+
             if person.is_vaccinated:
                 _simulation_continue = True
                 break
@@ -113,7 +113,7 @@ class Simulation(object):
         time_step_counter = 0
         should_continue = None
 
-        while should_continue:
+        while _simulation_should_continue:
         # TODO: for every iteration of this loop, call self.time_step() to compute another
         # round of this simulation.
         print('The simulation has ended after {time_step_counter} turns.'.format(time_step_counter))
@@ -167,7 +167,10 @@ class Simulation(object):
         # TODO: Call this method at the end of every time step and infect each Person.
         # TODO: Once you have iterated through the entire list of self.newly_infected, remember
         # to reset self.newly_infected back to an empty list.
-        pass
+        for person_id in self.newly_infected:
+            self.population[(person_id)].infection = self.virus
+
+        self.newly_infected = []
 
 
 if __name__ == "__main__":
