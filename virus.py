@@ -17,4 +17,4 @@ def test_virus_instantiation():
 
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":

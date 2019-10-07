@@ -1,1 +1,2 @@
-2: This is a test file. IS
+2: This is a test file.
+ IS

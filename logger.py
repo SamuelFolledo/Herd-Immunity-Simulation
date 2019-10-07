@@ -1,3 +1,6 @@
+from virus import Virus
+from person import Person
+
 class Logger(object):
     ''' Utility class responsible for logging all interactions during the simulation. '''
     # TODO: Write a test suite for this class to make sure each method is working
@@ -10,9 +13,13 @@ class Logger(object):
         # TODO:  Finish this initialization method. The file_name passed should be the
         # full file name of the file that the logs will be written to.
         self.file_name = file_name
+        self.pop_size = None
+        self.vacc_percentage = None
+        self.virus_name = None
+        self.mortality_rate = None
+        self.basic_repro_num = None
 
-    def write_metadata(self, pop_size, vacc_percentage, virus_name, mortality_rate,
-                       basic_repro_num):
+    def write_metadata(self, pop_size, vacc_percentage, virus_name, mortality_rate, basic_repro_num):
         '''
         The simulation class should use this method immediately to log the specific
         parameters of the simulation as the first line of the file.
@@ -23,10 +30,26 @@ class Logger(object):
         # the 'a' mode to append a new log to the end, since 'w' overwrites the file.
         # NOTE: Make sure to end every line with a '/n' character to ensure that each
         # event logged ends up on a separate line!
-        pass
+        self.pop_size = pop_size
+        self.vacc_percentage = vacc_percentage
+        self.virus_name = virus_name
+        self.mortality_rate = mortality_rate
+        self.basic_repro_num = basic_repro_num
+
 
     def log_interaction(self, person, random_person, random_person_sick=None,
-                        random_person_vacc=None, did_infect=None):
+                        random_person_vacc=None, did_infect=None): #removed did_infect=  None
+        if random_person.infection != None and random_person.infection == person.infection: #if random person has sickness and infection is the same as the person's infection, then we don't infect the random_person again
+            print(f"{person._id} didn't infect {random_person._id} because already sick\n")
+            return
+        elif random_person.is_vaccinated == True:
+            print(f"{person._id} didn't infect {random_person._id} because vaccinated\n")
+            return
+        else: #if user is not sick and not vaccinated, then infect
+            print(f"{person._id} infects {random_person._id}\n")
+            random_person.infection = person.infection
+            return random_person.did_survive_infection() #call if random person survived
+            
         '''
         The Simulation object should use this method to log every interaction
         a sick person has during each time step.
@@ -82,13 +105,18 @@ class Logger(object):
         print(fd2.read(100))
         fd2.write(" IS")
         fd2.close()
-
-        
-
-
         pass
+
+def test_log_interaction():
+    hiv = Virus("HIV", 0.8, 0.8) #virus with 0.8 mortality rate, so it shouldn't make the random perosn sick
+    person = Person(1, False, hiv)
+    random_person = Person(2, False)
+    log = Logger("kkk.txt")
+    print(f"Result is {log.log_interaction(person, random_person)}")
 
 
 if __name__ == "__main__":
-    log = Logger("logs.txt")
-    log.log_time_step(2)
+    # log = Logger("logs.txt")
+    # log.log_time_step(2)
+
+    test_log_interaction()
