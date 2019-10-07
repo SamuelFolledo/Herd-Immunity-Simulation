@@ -9,7 +9,7 @@ class Logger(object):
     def __init__(self, file_name):
         # TODO:  Finish this initialization method. The file_name passed should be the
         # full file name of the file that the logs will be written to.
-        self.file_name = None
+        self.file_name = file_name
 
     def write_metadata(self, pop_size, vacc_percentage, virus_name, mortality_rate,
                        basic_repro_num):
@@ -72,4 +72,23 @@ class Logger(object):
         # TODO: Finish this method. This method should log when a time step ends, and a
         # new one begins.
         # NOTE: Here is an opportunity for a stretch challenge!
+
+
+        fd = open(self.file_name, "w+")
+        fd.write(f"{time_step_number}: This is a test file.\n")
+        fd.close()
+
+        fd2 = open(self.file_name, "r+")
+        print(fd2.read(100))
+        fd2.write(" IS")
+        fd2.close()
+
+        
+
+
         pass
+
+
+if __name__ == "__main__":
+    log = Logger("logs.txt")
+    log.log_time_step(2)

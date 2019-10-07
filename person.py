@@ -1,4 +1,5 @@
 from random import randint
+import random
 # random.seed(42)
 from virus import Virus
 
@@ -23,7 +24,7 @@ class Person(object):
         if self.infection == None:
             return
         random_num = randint(1, 100) / 100
-        print(f"Person's immunity level is {random_num} VS virus's mortality rate of {self.infection.mortality_rate}")
+        # print(f"Person's immunity level is {random_num} VS virus's mortality rate of {self.infection.mortality_rate}")
         if random_num < self.infection.mortality_rate:
             return False
         return True
