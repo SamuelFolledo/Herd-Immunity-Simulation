@@ -32,7 +32,21 @@ class Logger(object):
 
 
     def log_interaction(self, person, random_person, random_person_sick=None,
+<<<<<<< HEAD
                         random_person_vacc=None, did_infect=None): #removed did_infect=  None
+=======
+                        random_person_vacc=None, did_infect = None): #removed did_infect =  None
+        if random_person.infection != None and random_person.infection == person.infection: #if random person has sickness and infection is the same as the person's infection, then we don't infect the random_person again
+            print(f"{person._id} didn't infect {random_person._id} because already sick\n")
+            return
+        elif random_person.is_vaccinated == True:
+            print(f"{person._id} didn't infect {random_person._id} because vaccinated\n")
+            return
+        else: #if user is not sick and not vaccinated, then infect
+            random_person.infection = person.infection
+            return random_person.did_survive_infection() #call if random person survived
+
+>>>>>>> ea7c6ce43ecb5a8e83120ccba069eb71091d95bb
         '''
         The Simulation object should use this method to log every interaction
         a sick person has during each time step.

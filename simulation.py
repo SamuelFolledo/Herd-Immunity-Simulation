@@ -51,6 +51,7 @@ class Simulation(object):
             virus_name, population_size, vacc_percentage, initial_infected)
         self.newly_infected = []
 
+
     def _create_population(self, initial_infected):
         '''This method will create the initial population.
             Args:
@@ -159,7 +160,21 @@ class Simulation(object):
             #     Simulation object's newly_infected array, so that their .infected
             #     attribute can be changed to True at the end of the time step.
         # TODO: Call slogger method during this method.
-        pass
+        if random_person.is_vaccinated:
+            self.logger.log_interaction(person, random_person, random_person_vacc = True)
+
+        elif random_person.infection:
+            self.logger.log_interaction(person, random_person, random_person_sick = True)
+
+        else:
+            number = random.random()
+            if number < self.virus.repro_rate:
+                random_person.infection = self.virus
+                self.newly_infected.append(random_person._id)
+                self.total_infected += 1
+                self.current_infected += 1
+                self.logger.log_interaction(person, random_person, did_infect=True)
+
 
     def _infect_newly_infected(self):
         ''' This method should iterate through the list of ._id stored in self.newly_infected
