@@ -32,21 +32,7 @@ class Logger(object):
 
 
     def log_interaction(self, person, random_person, random_person_sick=None,
-<<<<<<< HEAD
                         random_person_vacc=None, did_infect=None): #removed did_infect=  None
-=======
-                        random_person_vacc=None, did_infect = None): #removed did_infect =  None
-        if random_person.infection != None and random_person.infection == person.infection: #if random person has sickness and infection is the same as the person's infection, then we don't infect the random_person again
-            print(f"{person._id} didn't infect {random_person._id} because already sick\n")
-            return
-        elif random_person.is_vaccinated == True:
-            print(f"{person._id} didn't infect {random_person._id} because vaccinated\n")
-            return
-        else: #if user is not sick and not vaccinated, then infect
-            random_person.infection = person.infection
-            return random_person.did_survive_infection() #call if random person survived
-
->>>>>>> ea7c6ce43ecb5a8e83120ccba069eb71091d95bb
         '''
         The Simulation object should use this method to log every interaction
         a sick person has during each time step.
@@ -59,10 +45,12 @@ class Logger(object):
         # along with whether they are sick or vaccinated when they interact to determine
         # exactly what happened in the interaction and create a String, and write to your logfile.
         if random_person.infection != None and random_person.infection == person.infection: #if random person has sickness and infection is the same as the person's infection, then we don't infect the random_person again
-            print(f"\t{person._id} didn't infect {random_person._id} because already sick\n")
+            message = (f"\t{person._id} didn't infect {random_person._id} because already sick\n")
+            self.append_to_file(message)
             return
         elif random_person.is_vaccinated == True:
-            print(f"\t{person._id} didn't infect {random_person._id} because vaccinated\n")
+            message = (f"\t{person._id} didn't infect {random_person._id} because vaccinated\n")
+            self.append_to_file(message)
             return
         else: #if user is not sick and not vaccinated, then infect
             random_person.infection = person.infection
@@ -80,13 +68,15 @@ class Logger(object):
         # should be False.  Otherwise, did_die_from_infection should be True.
         # Append the results of the infection to the logfile
         if person.did_survive_infection():
-            print(f"\t{person._id} survived infection\n")
+            message = (f"\t{person._id} survived infection\n")
+            self.append_to_file(message)
             return True
         else:
-            print(f"\t{person._id} died from infection\n")
+            message = (f"\t{person._id} died from infection\n")
+            self.append_to_file(message)
             return False
 
-    def log_time_step(self, time_step_number):
+    def log_time_step(self, time_step_number, current_infected, current_dead, total_infected, total_dead):
         ''' STRETCH CHALLENGE DETAILS:
         If you choose to extend this method, the format of the summary statistics logged
         are up to you.
@@ -103,26 +93,25 @@ class Logger(object):
         # TODO: Finish this method. This method should log when a time step ends, and a
         # new one begins.
         # NOTE: Here is an opportunity for a stretch challenge!
+        message = (f"In {time_step_number}, {current_infected} people got infected and {current_dead} people died. Totaling {total_infected} people infeced and {total_dead} people dead.")
+        self.append_to_file(message)
+        
+    
+    def append_to_file(self, message):
+        log_file = open(self.file_name, "r+")
+        # print(fd2.read(100))
+        log_file.write(message)
+        log_file.close()
 
-
-       
-
-        fd2 = open(self.file_name, "r+")
-        print(fd2.read(100))
-        fd2.write(" IS")
-        fd2.close()
-        pass
-
+################################################## MAIN ##################################################
 def test_log_interaction():
     hiv = Virus("HIV", 0.8, 0.8) #virus with 0.8 mortality rate, so it shouldn't make the random person sick
     person = Person(1, False, hiv)
     random_person = Person(2, False)
-    log = Logger("kkk.txt")
+    log = Logger("logs.txt")
     print(f"Result is {log.log_interaction(person, random_person)}")
 
 
 if __name__ == "__main__":
-    # log = Logger("logs.txt")
-    # log.log_time_step(2)
 
     test_log_interaction()

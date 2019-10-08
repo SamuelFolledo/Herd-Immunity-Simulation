@@ -14,7 +14,7 @@ class Simulation(object):
     population that are vaccinated, the size of the population, and the amount of initially
     infected people in a population are all variables that can be set when the program is run.
     '''
-    def __init__(self, pop_size, vacc_percentage, initial_infected=1, virus):
+    def __init__(self, pop_size, vacc_percentage, virus, initial_infected=1):
         ''' Logger object logger records all events during the simulation.
         Population represents all Persons in the population.
         The next_person_id is the next available id for all created Persons,
@@ -114,14 +114,11 @@ class Simulation(object):
         time_step_counter = 0
         should_continue = None
 
+        while _simulation_should_continue:
         # TODO: for every iteration of this loop, call self.time_step() to compute another
         # round of this simulation.
-        while self._simulation_should_continue():
-            self.time_step()
-            self.logger.log_time_step(time_step_counter)
-            time_step_counter += 1
-
         print('The simulation has ended after {time_step_counter} turns.'.format(time_step_counter))
+        pass
 
     def time_step(self):
         ''' This method should contain all the logic for computing one time step
@@ -136,18 +133,7 @@ class Simulation(object):
                 increment interaction counter by 1.
             '''
         # TODO: Finish this method.
-        interaction_count = 0
-
-        for person in self.population:
-            if person.infection != None and person.is_alive:
-                while interaction_count < 100:
-                    random_person = self.population[(random.randint(0, self.pop_size -1))]
-                    if random_person.is_alive:
-                        self.did_survive_infection(person, random_person)
-                        interaction_count += 1
-
-
-
+        pass
 
     def interaction(self, person, random_person):
         '''This method should be called any time two living people are selected for an
