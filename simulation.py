@@ -47,6 +47,7 @@ class Simulation(object):
         self.current_infected = 0 # Int
         self.vacc_percentage = vacc_percentage # float between 0 and 1
         self.total_dead = 0 # Int
+        self.current_dead = 0
         self.file_name = "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format(
             virus_name, population_size, vacc_percentage, initial_infected)
         self.newly_infected = []
@@ -137,6 +138,7 @@ class Simulation(object):
             '''
         # TODO: Finish this method.
         interaction_count = 0
+        current_dead = 0
 
         for person in self.population:
             if person.infection != None and person.is_alive:
@@ -145,6 +147,8 @@ class Simulation(object):
                     if random_person.is_alive:
                         self.did_survive_infection(person, random_person)
                         interaction_count += 1
+                    else:
+                        current_dead += 1
 
 
 
