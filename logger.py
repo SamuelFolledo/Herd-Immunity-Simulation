@@ -46,9 +46,9 @@ class Logger(object):
             print(f"{person._id} didn't infect {random_person._id} because vaccinated\n")
             return
         else: #if user is not sick and not vaccinated, then infect
-            print(f"{person._id} infects {random_person._id}\n")
             random_person.infection = person.infection
-            return random_person.did_survive_infection() #call if random person survived
+            did_survive = self.log_infection_survival(random_person)
+            return did_survive
             
         '''
         The Simulation object should use this method to log every interaction
@@ -65,7 +65,7 @@ class Logger(object):
         # exactly what happened in the interaction and create a String, and write to your logfile.
         pass
 
-    def log_infection_survival(self, person, did_die_from_infection):
+    def log_infection_survival(self, person):
         ''' The Simulation object uses this method to log the results of every
         call of a Person object's .resolve_infection() method.
 
@@ -75,7 +75,12 @@ class Logger(object):
         # TODO: Finish this method. If the person survives, did_die_from_infection
         # should be False.  Otherwise, did_die_from_infection should be True.
         # Append the results of the infection to the logfile
-        pass
+        if person.did_survive_infection():
+            print(f"{person._id} surviced infection\n")
+            return True
+        else:
+            print(f"{person._id} died from infection\n")
+            return False
 
     def log_time_step(self, time_step_number):
         ''' STRETCH CHALLENGE DETAILS:
@@ -108,7 +113,7 @@ class Logger(object):
         pass
 
 def test_log_interaction():
-    hiv = Virus("HIV", 0.8, 0.8) #virus with 0.8 mortality rate, so it shouldn't make the random perosn sick
+    hiv = Virus("HIV", 0.8, 0.9) #virus with 0.8 mortality rate, so it shouldn't make the random person sick
     person = Person(1, False, hiv)
     random_person = Person(2, False)
     log = Logger("kkk.txt")
