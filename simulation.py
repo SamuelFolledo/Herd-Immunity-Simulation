@@ -47,6 +47,7 @@ class Simulation(object):
         self.current_infected = 0 # Int
         self.vacc_percentage = vacc_percentage # float between 0 and 1
         self.total_dead = 0 # Int
+        self.current_dead = 0
         self.file_name = "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format(
             virus_name, population_size, vacc_percentage, initial_infected)
         self.newly_infected = []
@@ -133,7 +134,25 @@ class Simulation(object):
                 increment interaction counter by 1.
             '''
         # TODO: Finish this method.
+<<<<<<< HEAD
         pass
+=======
+        interaction_count = 0
+        current_dead = 0
+
+        for person in self.population:
+            if person.infection != None and person.is_alive:
+                while interaction_count < 100:
+                    random_person = self.population[(random.randint(0, self.pop_size -1))]
+                    if random_person.is_alive:
+                        self.did_survive_infection(person, random_person)
+                        interaction_count += 1
+                    else:
+                        current_dead += 1
+
+
+
+>>>>>>> b72f6a0000c5c5730c8dd6232c2b413854a1001c
 
     def interaction(self, person, random_person):
         '''This method should be called any time two living people are selected for an
